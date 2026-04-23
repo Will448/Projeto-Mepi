@@ -35,6 +35,16 @@
     </div>
     <div class="col-6 col-md-3">
         <div class="metric-card">
+            <div class="metric-icon icon-blue"><i class="bi bi-receipt"></i></div>
+            <div>
+                <div class="metric-val">{{ $folhasGeradas }}</div>
+                <div class="metric-lbl">Folhas geradas (total)</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-6 col-md-3">
+        <div class="metric-card">
             <div class="metric-icon icon-red"><i class="bi bi-shield-exclamation"></i></div>
             <div>
                 <div class="metric-val">{{ $episVencendo }}</div>
@@ -120,50 +130,7 @@
     </div>
 </div>
 
-{{-- Notícias --}}
-<div class="card-mepi">
-    <div class="card-mepi-header">
-        <h6><i class="bi bi-newspaper me-2"></i>Notícias — Legislação Trabalhista &amp; Segurança</h6>
-        <span style="font-size:0.72rem;color:#aaa;">GNews API</span>
-    </div>
-    <div class="card-mepi-body">
-        <div id="noticias-grid" class="row g-3">
-            <div class="col-12 text-center py-4" id="noticias-loading">
-                <div class="spinner-border spinner-border-sm" style="color:var(--verde);"></div>
-                <span class="ms-2 text-muted" style="font-size:0.85rem;">Carregando notícias...</span>
-            </div>
-        </div>
-    </div>
-</div>
 
 @endsection
 
-@push('scripts')
-<script>
-const GNEWS_KEY = 'YOUR_GNEWS_KEY';
-async function carregarNoticias() {
-    const loading = document.getElementById('noticias-loading');
-    const grid    = document.getElementById('noticias-grid');
-    try {
-        const url  = `https://gnews.io/api/v4/search?q=${encodeURIComponent('legislação trabalhista segurança trabalho')}&lang=pt&country=br&max=4&apikey=${GNEWS_KEY}`;
-        const data = await (await fetch(url)).json();
-        loading.remove();
-        (data.articles || []).forEach(art => {
-            const col = document.createElement('div');
-            col.className = 'col-md-3';
-            col.innerHTML = `<a href="${art.url}" target="_blank" class="noticia-card d-flex flex-column text-decoration-none" style="background:#fff;border:1px solid #e5e5dc;border-radius:12px;overflow:hidden;transition:all .2s;color:inherit;">
-                ${art.image ? `<img src="${art.image}" style="width:100%;height:110px;object-fit:cover;">` : ''}
-                <div style="padding:12px;flex:1;display:flex;flex-direction:column;gap:5px;">
-                    <span style="font-size:.68rem;font-weight:700;text-transform:uppercase;color:var(--verde);">${art.source.name}</span>
-                    <p style="font-size:.82rem;font-weight:600;color:#2c2c2c;line-height:1.4;flex:1;margin:0;">${art.title}</p>
-                    <span style="font-size:.7rem;color:#aaa;">${new Date(art.publishedAt).toLocaleDateString('pt-BR')}</span>
-                </div></a>`;
-            grid.appendChild(col);
-        });
-    } catch(e) {
-        loading.innerHTML = `<div class="col-12"><div style="background:rgba(245,196,0,.1);border:1px solid rgba(245,196,0,.3);border-radius:10px;padding:14px;font-size:.83rem;color:#8a6d00;"><i class="bi bi-info-circle me-2"></i>Configure a chave <code>GNEWS_KEY</code> em <a href="https://gnews.io" target="_blank" style="color:var(--verde);">gnews.io</a> (gratuito).</div></div>`;
-    }
-}
-carregarNoticias();
-</script>
-@endpush
+

@@ -53,7 +53,7 @@ class FeriasService
 
             // Busca férias aprovadas deste período aquisitivo
             $feriasGozadas = Ferias::where('funcionario_id', $funcionario->id)
-                ->where('status', 'aprovado')
+                ->where('status', 'aprovado', 'pendente') // Considera pendente para calcular saldo real    
                 ->where('periodo_aquisitivo_inicio', $inicio->toDateString())
                 ->get();
 

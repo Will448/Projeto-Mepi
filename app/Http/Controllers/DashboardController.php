@@ -19,7 +19,8 @@ class DashboardController extends Controller
             'totalFuncionarios'   => Funcionario::where('status', 'ativo')->count(),
             'feriasPendentes'     => Ferias::where('status', 'pendente')->count(),
             'episEntregues'       => EntregaEquipamento::whereNull('data_devolucao')->count(),
-            'folhasGeradas'       => FolhaPagamento::whereRaw("LEFT(competencia,7) = ?", [now()->format('Y-m')])->count(),
+            'folhasDoMes'   => FolhaPagamento::whereRaw("LEFT(competencia,7) = ?", [now()->format('Y-m')])->count(),
+            'folhasGeradas' => FolhaPagamento::count(),
             'ultimosFuncionarios' => Funcionario::with('cargo')->latest()->take(5)->get(),
             'feriasPendentesLista'=> Ferias::with('funcionario')->where('status','pendente')->latest()->take(5)->get(),
         ]);
@@ -34,6 +35,7 @@ class DashboardController extends Controller
             'feriasPendentes'     => Ferias::where('status', 'pendente')->count(),
             'folhasMes'           => FolhaPagamento::whereRaw("LEFT(competencia,7) = ?", [now()->format('Y-m')])->count(),
             'episVencendo'        => Equipamento::whereNotNull('validade')->where('validade','<=',$vencendo)->count(),
+            'folhasGeradas' => FolhaPagamento::count(),
             'feriasPendentesLista'=> Ferias::with('funcionario')->where('status','pendente')->latest()->take(6)->get(),
             'episVencendoLista'   => Equipamento::whereNotNull('validade')->where('validade','<=',$vencendo)->orderBy('validade')->take(6)->get(),
         ]);

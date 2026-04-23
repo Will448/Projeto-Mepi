@@ -431,21 +431,49 @@
         </div>
     </div>
 </section>
-<h2>👥 Notícias de RH</h2>
-
-@if(!empty($rh['articles'] ?? []))
-    @foreach($rh['articles'] as $article)
-        <p>
-            <a href="{{ $article['url'] }}" target="_blank">
-                {{ $article['title'] }}
-            </a><br>
-            <small>{{ $article['source']['name'] ?? 'Fonte' }}</small>
+<!-- ═══ NOTÍCIAS ════════════════════════════════════════════════ -->
+<section style="background:#f7f5ee;padding:60px 24px;">
+    <div class="container">
+        <h2 style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--verde-escuro);text-align:center;margin-bottom:8px;letter-spacing:-1px;">
+            Notícias de RH
+        </h2>
+        <p style="text-align:center;color:#888;margin-bottom:40px;font-size:1rem;">
+            Atualidades sobre gestão de pessoas e mercado de trabalho
         </p>
-        <hr>
-    @endforeach
-@else
-    <p>Sem notícias de RH no momento.</p>
-@endif
+
+        <div class="row g-3">
+            @forelse($rh['articles'] ?? [] as $article)
+            <div class="col-md-4">
+                <a href="{{ $article['url'] }}" target="_blank"
+                   style="display:flex;flex-direction:column;background:#fff;border:1px solid #e5e5dc;border-radius:12px;overflow:hidden;text-decoration:none;color:inherit;transition:all .2s;height:100%;"
+                   onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(26,107,58,0.1)'"
+                   onmouseout="this.style.transform='';this.style.boxShadow=''">
+                    @if(!empty($article['image']))
+                    <img src="{{ $article['image'] }}" alt=""
+                         style="width:100%;height:160px;object-fit:cover;">
+                    @endif
+                    <div style="padding:16px;flex:1;display:flex;flex-direction:column;gap:6px;">
+                        <span style="font-size:.68rem;font-weight:700;text-transform:uppercase;color:var(--verde);">
+                            {{ $article['source']['name'] ?? 'Fonte' }}
+                        </span>
+                        <p style="font-size:.85rem;font-weight:600;color:#2c2c2c;line-height:1.4;flex:1;margin:0;">
+                            {{ $article['title'] }}
+                        </p>
+                        <span style="font-size:.72rem;color:#aaa;">
+                            {{ \Carbon\Carbon::parse($article['publishedAt'])->format('d/m/Y') }}
+                        </span>
+                    </div>
+                </a>
+            </div>
+            @empty
+            <div class="col-12 text-center py-4">
+                <i class="bi bi-newspaper" style="font-size:2rem;color:#ccc;display:block;margin-bottom:8px;"></i>
+                <span style="color:#aaa;font-size:.88rem;">Nenhuma notícia disponível no momento.</span>
+            </div>
+            @endforelse
+        </div>
+    </div>
+</section>
 
 <hr>
 

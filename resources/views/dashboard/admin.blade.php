@@ -34,15 +34,24 @@
             </div>
         </div>
     </div>
-    <div class="col-6 col-md-3">
-        <div class="metric-card">
-            <div class="metric-icon icon-red"><i class="bi bi-receipt-cutoff"></i></div>
-            <div>
-                <div class="metric-val">{{ $folhasGeradas }}</div>
-                <div class="metric-lbl">Folhas geradas</div>
-            </div>
+  <div class="col-6 col-md-3">
+    <div class="metric-card">
+        <div class="metric-icon icon-red"><i class="bi bi-receipt-cutoff"></i></div>
+        <div>
+            <div class="metric-val">{{ $folhasDoMes }}</div>
+            <div class="metric-lbl">Folhas do mês</div>
         </div>
     </div>
+</div>
+<div class="col-6 col-md-3">
+    <div class="metric-card">
+        <div class="metric-icon icon-red"><i class="bi bi-receipt"></i></div>
+        <div>
+            <div class="metric-val">{{ $folhasGeradas }}</div>
+            <div class="metric-lbl">Folhas geradas (total)</div>
+        </div>
+    </div>
+</div>
 </div>
 
 {{-- ── LINHA PRINCIPAL ───────────────────────────────────── --}}
@@ -90,7 +99,7 @@
         <div class="card-mepi">
             <div class="card-mepi-header">
                 <h6><i class="bi bi-calendar-heart me-2"></i>Férias Aguardando Aprovação</h6>
-                <a href="#" class="btn-mepi btn-mepi-amarelo" style="padding:5px 14px;font-size:0.78rem;">
+                <a href="{{ route('admin.ferias.index') }}" class="btn-mepi btn-mepi-amarelo" style="padding:5px 14px;font-size:0.78rem;">
                     Ver todas <i class="bi bi-arrow-right"></i>
                 </a>
             </div>

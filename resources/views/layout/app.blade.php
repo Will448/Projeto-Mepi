@@ -366,36 +366,36 @@
     </div>
 
     {{-- Admin e RH --}}
-    @if(in_array(auth()->user()->role, ['admin','rh']))
-    <div class="nav-group">
-        <div class="nav-group-label">Gestão</div>
-        <a href="{{ route('admin.funcionarios.index') }}"
-           class="nav-link-mepi {{ request()->routeIs('*.funcionarios.*') ? 'active' : '' }}">
-            <i class="bi bi-people"></i> Funcionários
-        </a>
-        <a href="{{ route('admin.cargos.index') }}"
-           class="nav-link-mepi {{ request()->routeIs('*.cargos.*') ? 'active' : '' }}">
-            <i class="bi bi-briefcase"></i> Cargos
-        </a>
-        <a href="#"
-           class="nav-link-mepi {{ request()->routeIs('*.ferias.*') ? 'active' : '' }}">
-            <i class="bi bi-calendar-heart"></i> Férias
-        </a>
-        <a href="#"
-           class="nav-link-mepi {{ request()->routeIs('*.folha.*') ? 'active' : '' }}">
-            <i class="bi bi-receipt-cutoff"></i> Folha de Pagamento
-        </a>
-        <a href="#"
-           class="nav-link-mepi {{ request()->routeIs('*.equipamentos.*') ? 'active' : '' }}">
-            <i class="bi bi-shield-check"></i> Equipamentos
-        </a>
-        <a href="#"
-           class="nav-link-mepi {{ request()->routeIs('*.entregas.*') ? 'active' : '' }}">
-            <i class="bi bi-box-seam"></i> Entregas EPI
-        </a>
-    </div>
-    @endif
-
+@if(in_array(auth()->user()->role, ['admin','rh']))
+@php $role = auth()->user()->role; @endphp
+<div class="nav-group">
+    <div class="nav-group-label">Gestão</div>
+    <a href="{{ route($role.'.funcionarios.index') }}"
+       class="nav-link-mepi {{ request()->routeIs('*.funcionarios.*') ? 'active' : '' }}">
+        <i class="bi bi-people"></i> Funcionários
+    </a>
+    <a href="{{ route($role.'.cargos.index') }}"
+       class="nav-link-mepi {{ request()->routeIs('*.cargos.*') ? 'active' : '' }}">
+        <i class="bi bi-briefcase"></i> Cargos
+    </a>
+    <a href="{{ route($role.'.ferias.index') }}"
+       class="nav-link-mepi {{ request()->routeIs('*.ferias.*') ? 'active' : '' }}">
+        <i class="bi bi-calendar-heart"></i> Férias
+    </a>
+    <a href="{{ route($role.'.folha.index') }}"
+       class="nav-link-mepi {{ request()->routeIs('*.folha.*') ? 'active' : '' }}">
+        <i class="bi bi-receipt-cutoff"></i> Folha de Pagamento
+    </a>
+    <a href="{{ route($role.'.equipamentos.index') }}"
+       class="nav-link-mepi {{ request()->routeIs('*.equipamentos.*') ? 'active' : '' }}">
+        <i class="bi bi-shield-check"></i> Equipamentos
+    </a>
+    <a href="{{ route($role.'.entregas.index') }}"
+       class="nav-link-mepi {{ request()->routeIs('*.entregas.*') ? 'active' : '' }}">
+        <i class="bi bi-box-seam"></i> Entregas EPI
+    </a>
+</div>
+@endif
     {{-- Somente Admin --}}
     @if(auth()->user()->role === 'admin')
     <div class="nav-group">
@@ -411,19 +411,19 @@
     @if(auth()->user()->role === 'funcionario')
     <div class="nav-group">
         <div class="nav-group-label">Minha Área</div>
-        <a href="#"
+        <a href="{{ route('funcionario.perfil') }}"
            class="nav-link-mepi {{ request()->routeIs('funcionario.perfil') ? 'active' : '' }}">
             <i class="bi bi-person-circle"></i> Meu Perfil
         </a>
-        <a href="#"
+        <a href="{{ route('funcionario.ferias') }}"
            class="nav-link-mepi {{ request()->routeIs('funcionario.ferias') ? 'active' : '' }}">
             <i class="bi bi-calendar-heart"></i> Minhas Férias
         </a>
-        <a href="#"
+        <a href="{{ route('funcionario.holerite') }}"
            class="nav-link-mepi {{ request()->routeIs('funcionario.holerite') ? 'active' : '' }}">
             <i class="bi bi-receipt-cutoff"></i> Holerite
         </a>
-        <a href="#"
+        <a href="{{ route('funcionario.equipamentos') }}"
            class="nav-link-mepi {{ request()->routeIs('funcionario.equipamentos') ? 'active' : '' }}">
             <i class="bi bi-shield-check"></i> Meus EPIs
         </a>

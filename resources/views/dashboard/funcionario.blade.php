@@ -62,7 +62,7 @@
         <div class="card-mepi">
             <div class="card-mepi-header">
                 <h6><i class="bi bi-calendar-heart me-2"></i>Minhas Férias</h6>
-                <a href="#" class="btn-mepi btn-mepi-amarelo" style="padding:5px 14px;font-size:0.78rem;">
+                <a href="{{ route('funcionario.ferias.solicitar') }}" class="btn-mepi btn-mepi-amarelo" style="padding:5px 14px;font-size:0.78rem;">
                     Solicitar <i class="bi bi-plus-lg"></i>
                 </a>
             </div>
@@ -94,7 +94,7 @@
         <div class="card-mepi">
             <div class="card-mepi-header">
                 <h6><i class="bi bi-receipt-cutoff me-2"></i>Último Holerite</h6>
-                <a href="#" class="btn-mepi" style="padding:5px 14px;font-size:0.78rem;">
+                <a href="{{ route('funcionario.holerite') }}" class="btn-mepi" style="padding:5px 14px;font-size:0.78rem;">
                     Ver histórico <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
