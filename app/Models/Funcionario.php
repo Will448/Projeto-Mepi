@@ -25,4 +25,8 @@ class Funcionario extends \Illuminate\Database\Eloquent\Model
     {
         return $this->data_admissao->diffInMonths(now());
     }
+     public function reservas()
+    {
+        return $this->hasMany(\App\Models\ReservaEquipamento::class);
+    }
 }

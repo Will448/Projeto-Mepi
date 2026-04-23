@@ -11,6 +11,7 @@ use App\Http\Controllers\FolhaPagamentoController;
 use App\Http\Controllers\EquipamentoController;
 use App\Http\Controllers\EntregaEquipamentoController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReservaEquipamentoController;
 
 // ── Página inicial (landing) ──────────────────────────────
 Route::get('/', function () {
@@ -37,6 +38,7 @@ Route::get('/login',  [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout',[AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
+// ── Admin ──
 Route::prefix('admin')->middleware(['auth','role:admin'])->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'admin'])->name('dashboard');
     Route::resource('funcionarios', FuncionarioController::class);
@@ -44,14 +46,18 @@ Route::prefix('admin')->middleware(['auth','role:admin'])->name('admin.')->group
     Route::resource('ferias',       FeriasController::class)->parameters(['ferias' => 'ferias']);
     Route::get('ferias/{ferias}/editar', [FeriasController::class, 'edit'])->name('ferias.edit');
     Route::put('ferias/{ferias}/editar', [FeriasController::class, 'editarDatas'])->name('ferias.editarDatas');
+    Route::post('folha/simular', [FolhaPagamentoController::class, 'simular'])->name('folha.simular'); // ← ANTES
     Route::resource('folha',        FolhaPagamentoController::class);
-    Route::post('folha/simular', [FolhaPagamentoController::class, 'simular'])->name('folha.simular');
     Route::resource('equipamentos', EquipamentoController::class);
     Route::resource('entregas',     EntregaEquipamentoController::class);
     Route::resource('usuarios',     UserController::class)->parameters(['usuarios' => 'user']);
+    Route::get('reservas',                      [ReservaEquipamentoController::class, 'index'])->name('reservas.index');
+    Route::get('reservas/{reserva}',            [ReservaEquipamentoController::class, 'show'])->name('reservas.show');
+    Route::put('reservas/{reserva}',            [ReservaEquipamentoController::class, 'update'])->name('reservas.update');
+    Route::post('reservas/{reserva}/converter', [ReservaEquipamentoController::class, 'converter'])->name('reservas.converter');
 });
 
-// ── RH ────────────────────────────────────────────────────
+// ── RH ──
 Route::prefix('rh')->middleware(['auth','role:rh,admin'])->name('rh.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'rh'])->name('dashboard');
     Route::resource('funcionarios', FuncionarioController::class);
@@ -59,10 +65,14 @@ Route::prefix('rh')->middleware(['auth','role:rh,admin'])->name('rh.')->group(fu
     Route::resource('ferias',       FeriasController::class)->parameters(['ferias' => 'ferias']);
     Route::get('ferias/{ferias}/editar', [FeriasController::class, 'edit'])->name('ferias.edit');
     Route::put('ferias/{ferias}/editar', [FeriasController::class, 'editarDatas'])->name('ferias.editarDatas');
-    Route::post('folha/simular', [FolhaPagamentoController::class, 'simular'])->name('folha.simular');
+    Route::post('folha/simular', [FolhaPagamentoController::class, 'simular'])->name('folha.simular'); // ← ANTES
     Route::resource('folha',        FolhaPagamentoController::class);
     Route::resource('equipamentos', EquipamentoController::class);
     Route::resource('entregas',     EntregaEquipamentoController::class);
+    Route::get('reservas',                      [ReservaEquipamentoController::class, 'index'])->name('reservas.index');
+    Route::get('reservas/{reserva}',            [ReservaEquipamentoController::class, 'show'])->name('reservas.show');
+    Route::put('reservas/{reserva}',            [ReservaEquipamentoController::class, 'update'])->name('reservas.update');
+    Route::post('reservas/{reserva}/converter', [ReservaEquipamentoController::class, 'converter'])->name('reservas.converter');
 });
 
 // ── Funcionário ───────────────────────────────────────────
@@ -74,4 +84,8 @@ Route::prefix('funcionario')->middleware(['auth','role:funcionario'])->name('fun
     Route::get('/holerite',    [FolhaPagamentoController::class, 'meuHolerite'])->name('holerite');
     Route::get('/holerite/{folha}', [FolhaPagamentoController::class, 'show'])->name('holerite.show');
     Route::get('/equipamentos',[EntregaEquipamentoController::class, 'meusEquipamentos'])->name('equipamentos');
+     Route::get('/reservas',                        [ReservaEquipamentoController::class, 'minhasReservas'])->name('reservas');
+    Route::post('/reservas',                       [ReservaEquipamentoController::class, 'solicitar'])->name('reservas.solicitar');
+    Route::delete('/reservas/{reserva}/cancelar',  [ReservaEquipamentoController::class, 'cancelar'])->name('reservas.cancelar');
+
 });

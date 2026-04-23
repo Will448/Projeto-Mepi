@@ -394,6 +394,15 @@
        class="nav-link-mepi {{ request()->routeIs('*.entregas.*') ? 'active' : '' }}">
         <i class="bi bi-box-seam"></i> Entregas EPI
     </a>
+    <a href="{{ route(auth()->user()->role.'.reservas.index') }}"
+    class="nav-link-mepi {{ request()->routeIs('*.reservas.*') ? 'active' : '' }}">
+        <i class="bi bi-bookmark-check"></i> Reservas EPI
+        @php $pendentesReserva = \App\Models\ReservaEquipamento::where('status','pendente')->count(); @endphp
+        @if($pendentesReserva > 0)
+            <span class="nav-badge">{{ $pendentesReserva }}</span>
+        @endif
+
+   </a>
 </div>
 @endif
     {{-- Somente Admin --}}
@@ -426,6 +435,10 @@
         <a href="{{ route('funcionario.equipamentos') }}"
            class="nav-link-mepi {{ request()->routeIs('funcionario.equipamentos') ? 'active' : '' }}">
             <i class="bi bi-shield-check"></i> Meus EPIs
+        </a>
+        <a href="{{ route('funcionario.reservas') }}"
+            class="nav-link-mepi {{ request()->routeIs('funcionario.reservas*') ? 'active' : '' }}">
+            <i class="bi bi-bookmark-plus"></i> Reservar EPI
         </a>
     </div>
     @endif
