@@ -1,6 +1,4 @@
-{{-- ============================================================
-     ARQUIVO 1: resources/views/equipamentos/create.blade.php
-     ============================================================ --}}
+
 @extends('layout.app')
 @section('title', 'Novo Equipamento')
 @section('page-title', 'Novo Equipamento')
