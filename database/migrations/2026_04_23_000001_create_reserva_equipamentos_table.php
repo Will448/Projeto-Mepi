@@ -15,25 +15,24 @@ return new class extends Migration
      *
      *  O campo reserva_convertida indica se a reserva já virou entrega real.
      */
-    public function up(): void
-    {
+public function up(): void
+{
+    // Se a tabela já existe, só garante que está completa
+    if (!Schema::hasTable('reservas_equipamentos')) {
         Schema::create('reservas_equipamentos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('funcionario_id')->constrained('funcionarios')->onDelete('cascade');
             $table->foreignId('equipamento_id')->constrained('equipamentos')->onDelete('cascade');
-
-            $table->date('data_inicio');           // quando pretende usar
-            $table->date('data_fim')->nullable();  // previsão de devolução (opcional)
-            $table->text('justificativa')->nullable(); // por que precisa do equipamento
-
+            $table->date('data_inicio');
+            $table->date('data_fim')->nullable();
+            $table->text('justificativa')->nullable();
             $table->enum('status', ['pendente', 'aprovado', 'negado'])->default('pendente');
-            $table->text('observacao_rh')->nullable(); // resposta do RH
-
-            $table->boolean('reserva_convertida')->default(false); // virou EntregaEquipamento?
-
+            $table->text('observacao_rh')->nullable();
+            $table->boolean('reserva_convertida')->default(false);
             $table->timestamps();
         });
     }
+}
 
     public function down(): void
     {

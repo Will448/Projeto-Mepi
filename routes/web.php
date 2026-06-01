@@ -12,6 +12,8 @@ use App\Http\Controllers\EquipamentoController;
 use App\Http\Controllers\EntregaEquipamentoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReservaEquipamentoController;
+use App\Http\Controllers\SenhaController;
+use App\Http\Controllers\AuditoriaController;
 
 // ── Página inicial (landing) ──────────────────────────────
 Route::get('/', function () {
@@ -55,6 +57,9 @@ Route::prefix('admin')->middleware(['auth','role:admin'])->name('admin.')->group
     Route::get('reservas/{reserva}',            [ReservaEquipamentoController::class, 'show'])->name('reservas.show');
     Route::put('reservas/{reserva}',            [ReservaEquipamentoController::class, 'update'])->name('reservas.update');
     Route::post('reservas/{reserva}/converter', [ReservaEquipamentoController::class, 'converter'])->name('reservas.converter');
+    Route::get('auditoria',         [AuditoriaController::class, 'index'])->name('auditoria.index');
+    Route::get('auditoria/{auditoria}', [AuditoriaController::class, 'show'])->name('auditoria.show');
+
 });
 
 // ── RH ──

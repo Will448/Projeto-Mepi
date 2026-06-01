@@ -289,7 +289,13 @@
            class="nav-link-mepi {{ request()->routeIs('admin.usuarios.*') ? 'active' : '' }}">
             <i class="bi bi-person-gear"></i> Usuários
         </a>
+        
+        <a href="{{ route('admin.auditoria.index') }}"
+        class="nav-link-mepi {{ request()->routeIs('admin.auditoria.*') ? 'active' : '' }}">
+            <i class="bi bi-journal-text"></i> Auditoria
+        </a>
     </div>
+    
     @endif
 
     @if(auth()->user()->role === 'funcionario')

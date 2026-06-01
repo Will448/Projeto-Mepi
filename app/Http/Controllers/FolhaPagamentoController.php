@@ -7,6 +7,8 @@ use App\Models\Funcionario;
 use App\Models\Ferias;
 use App\Services\FolhaService;
 use Illuminate\Http\Request;
+use App\Mail\FolhaGeradaMail;
+use Illuminate\Support\Facades\Mail;
 
 class FolhaPagamentoController extends Controller
 {
@@ -151,6 +153,19 @@ class FolhaPagamentoController extends Controller
             'competencia'    => $request->competencia,
             'observacao'     => $request->observacao,
         ]);
+            $folha = FolhaPagamento::where('funcionario_id', $funcionario->id)
+                ->where('competencia', $request->competencia)
+                ->latest()->first();
+
+                if ($funcionario->user?->email) {
+                    try {
+                        Mail::to($funcionario->user->email)
+                            ->send(new FolhaGeradaMail($folha->load('funcionario')));
+                    } catch (\Exception $e) {
+                        error_log('Erro ao enviar e-mail da folha: ' . $e->getMessage());
+                        //Log::error('Erro ao enviar e-mail da folha: ' . $e->getMessage());
+                    }
+                }   
 
         return redirect()
             ->route($this->prefix() . 'folha.index')

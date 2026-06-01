@@ -1,0 +1,216 @@
+{
+  "info": {
+    "name": "MEPI API",
+    "description": "API REST do sistema MEPI — Monitoramento Inteligente de Pessoas e Equipamentos",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:8000/api" },
+    { "key": "token",    "value": "" }
+  ],
+  "item": [
+
+    {
+      "name": "🔐 Auth",
+      "item": [
+        {
+          "name": "Login",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "const json = pm.response.json();",
+            "if (json.token) { pm.collectionVariables.set('token', json.token); }",
+            "pm.test('Login OK', () => pm.response.to.have.status(200));"
+          ] } }],
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/login",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@mepi.com\",\n  \"password\": \"password\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Me (usuário logado)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/me",
+            "header": [
+              { "key": "Accept",        "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ]
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/logout",
+            "header": [
+              { "key": "Accept",        "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ]
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "👥 Funcionários",
+      "item": [
+        {
+          "name": "Listar todos",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/funcionarios?status=ativo&busca=",
+              "host": ["{{base_url}}"],
+              "path": ["funcionarios"],
+              "query": [
+                { "key": "status", "value": "ativo" },
+                { "key": "busca",  "value": "" }
+              ]
+            },
+            "header": [
+              { "key": "Accept",        "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ]
+          }
+        },
+        {
+          "name": "Buscar por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/funcionarios/1",
+            "header": [
+              { "key": "Accept",        "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ]
+          }
+        },
+        {
+          "name": "Criar funcionário",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/funcionarios",
+            "header": [
+              { "key": "Accept",        "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Pedro Oliveira\",\n  \"cpf\": \"444.555.666-77\",\n  \"email\": \"pedro@empresa.com\",\n  \"data_admissao\": \"2026-01-15\",\n  \"salario\": 3500.00,\n  \"cargo_id\": 1,\n  \"status\": \"ativo\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Atualizar funcionário",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/funcionarios/1",
+            "header": [
+              { "key": "Accept",        "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"salario\": 4000.00,\n  \"status\": \"ativo\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Inativar funcionário",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/funcionarios/1",
+            "header": [
+              { "key": "Accept",        "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ]
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "🏖️ Férias",
+      "item": [
+        {
+          "name": "Listar férias",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/ferias?status=pendente",
+            "header": [
+              { "key": "Accept",        "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ]
+          }
+        },
+        {
+          "name": "Detalhe das férias",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/ferias/1",
+            "header": [
+              { "key": "Accept",        "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ]
+          }
+        },
+        {
+          "name": "Aprovar férias",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/ferias/1/status",
+            "header": [
+              { "key": "Accept",        "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"aprovado\",\n  \"observacao\": \"Aprovado conforme solicitação.\"\n}"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "🦺 Equipamentos",
+      "item": [
+        {
+          "name": "Listar equipamentos",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/equipamentos?status=disponivel",
+            "header": [
+              { "key": "Accept",        "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ]
+          }
+        },
+        {
+          "name": "Criar equipamento",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/equipamentos",
+            "header": [
+              { "key": "Accept",        "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Luva de Proteção\",\n  \"numero_serie\": \"LUV-010\",\n  \"tipo\": \"EPI\",\n  \"validade\": \"2027-06-30\",\n  \"status\": \"disponivel\"\n}"
+            }
+          }
+        }
+      ]
+    }
+
+  ]
+}

@@ -6,6 +6,8 @@ use App\Models\Ferias;
 use App\Models\Funcionario;
 use App\Services\FeriasService;
 use Illuminate\Http\Request;
+use App\Mail\FeriasStatusMail;
+use Illuminate\Support\Facades\Mail;
 
 class FeriasController extends Controller
 {
@@ -95,7 +97,18 @@ public function store(Request $request)
         $ferias->observacao = $request->observacao;
         $ferias->save();
 
-        $msg = $request->status === 'aprovado' ? 'Férias aprovadas!' : 'Férias negadas.';
+        // Carrega funcionário e usuário
+        $ferias->load('funcionario.user');
+
+        // Envia e-mail ao funcionário
+        if ($ferias->funcionario?->user?->email) {
+            Mail::to($ferias->funcionario->user->email)
+                ->send(new FeriasStatusMail($ferias));
+        }
+
+        $msg = $request->status === 'aprovado'
+            ? 'Férias aprovadas!'
+            : 'Férias negadas.';
 
         return redirect()
             ->route($this->prefix() . 'ferias.show', $ferias)

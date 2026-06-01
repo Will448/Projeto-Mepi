@@ -7,6 +7,8 @@ use App\Models\Equipamento;
 use App\Models\Funcionario;
 use App\Models\EntregaEquipamento;
 use Illuminate\Http\Request;
+use App\Mail\ReservaStatusMail;
+use Illuminate\Support\Facades\Mail;
 
 class ReservaEquipamentoController extends Controller
 {
@@ -59,6 +61,12 @@ class ReservaEquipamentoController extends Controller
             'status'        => $request->status,
             'observacao_rh' => $request->observacao_rh,
         ]);
+
+        // Enviar e-mail de notificação
+        if ($reserva->funcionario->user?->email) {
+            Mail::to($reserva->funcionario->user->email)
+            ->send(new ReservaStatusMail($reserva->fresh()->load('funcionario','equipamento')));
+        }   
 
         $msg = $request->status === 'aprovado'
             ? 'Reserva aprovada! O funcionário será notificado.'
