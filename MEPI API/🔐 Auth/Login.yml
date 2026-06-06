@@ -14,7 +14,7 @@ http:
     data: |-
       {
         "email": "admin@mepi.com",
-        "password": "password"
+        "password": "123456"
       }
   auth: inherit
 
@@ -32,4 +32,3 @@ settings:
   timeout: 0
   followRedirects: true
   maxRedirects: 5
-​
