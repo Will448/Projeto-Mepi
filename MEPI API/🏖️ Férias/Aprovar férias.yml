@@ -1,0 +1,29 @@
+info:
+  name: Aprovar férias
+  type: http
+  seq: 3
+
+http:
+  method: PUT
+  url: "{{base_url}}/ferias/1/status"
+  headers:
+    - name: Accept
+      value: application/json
+    - name: Authorization
+      value: Bearer {{token}}
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "status": "aprovado",
+        "observacao": "Aprovado conforme solicitação."
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

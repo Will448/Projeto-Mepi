@@ -1,0 +1,27 @@
+info:
+  name: Listar todos
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{base_url}}/funcionarios?status=ativo&busca="
+  headers:
+    - name: Accept
+      value: application/json
+    - name: Authorization
+      value: Bearer {{token}}
+  params:
+    - name: status
+      value: ativo
+      type: query
+    - name: busca
+      value: ""
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -1,0 +1,21 @@
+opencollection: 1.0.0
+
+info:
+  name: MEPI API
+
+request:
+  variables:
+    - name: base_url
+      value: http://localhost:8000/api
+    - name: token
+      value: ""
+
+docs:
+  content: API REST do sistema MEPI — Monitoramento Inteligente de Pessoas e Equipamentos
+  type: text/markdown
+bundled: false
+extensions:
+  bruno:
+    ignore:
+      - node_modules
+      - .git

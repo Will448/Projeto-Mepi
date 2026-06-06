@@ -1,0 +1,32 @@
+info:
+  name: Criar equipamento
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{base_url}}/equipamentos"
+  headers:
+    - name: Accept
+      value: application/json
+    - name: Authorization
+      value: Bearer {{token}}
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "nome": "Luva de Proteção",
+        "numero_serie": "LUV-010",
+        "tipo": "EPI",
+        "validade": "2027-06-30",
+        "status": "disponivel"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
