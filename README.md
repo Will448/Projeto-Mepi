@@ -129,6 +129,8 @@ O redirecionamento após o login é automático conforme o perfil do usuário.
 
 O MEPI integra a **[GNews API](https://gnews.io)** para exibir notícias nos dashboards de Admin e RH.
 
+Além disso, é integrado o formato de testes de API com a ferramenta Bruno e também possui estrutura criada para o Postman.
+
 ---
 
 
