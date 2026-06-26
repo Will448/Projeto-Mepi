@@ -131,6 +131,9 @@ O MEPI integra a **[GNews API](https://gnews.io)** para exibir notícias nos das
 
 Além disso, é integrado o formato de testes de API com a ferramenta Bruno e também possui estrutura criada para o Postman.
 
+
+Utilizado o MailTrap para o disparo dos emails
+
 ---
 
 
