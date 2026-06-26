@@ -209,10 +209,22 @@ class FolhaPagamentoController extends Controller
 
         return view('folha.meu_holerite', compact('funcionario', 'folhas'));
     }
+
+    public function reenviarEmail(FolhaPagamento $folha){
+        $folha->load('funcionario.user');
+
+        if (!$folha->funcionario->user?->email) {
+            return back()->with('error', 'Funcionário não possui e-mail de acesso cadastrado.');
+        }
+
+        Mail::to($folha->funcionario->user->email)
+            ->send(new \App\Mail\FolhaGeradaMail($folha));
+
+        return back()->with('success', 'Holerite reenviado por e-mail!');
+    }
     
 
-    private function prefix(): string
-    {
+    private function prefix(): string{
         return str_starts_with(request()->route()->getName(), 'admin.') ? 'admin.' : 'rh.';
     }
 }

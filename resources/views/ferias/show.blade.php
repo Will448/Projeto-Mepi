@@ -128,6 +128,33 @@
             </div>
         </div>
         @endif
+        {{-- Reenviar e-mail --}}
+        @if(!$ferias->isPendente())
+        <div class="card-mepi mt-3">
+            <div class="card-mepi-header">
+                <h6><i class="bi bi-envelope me-2"></i>Notificação por E-mail</h6>
+            </div>
+            <div class="card-mepi-body">
+                <p style="font-size:.82rem;color:#666;margin-bottom:12px;">
+                    Destinatário:
+                    <strong>{{ $ferias->funcionario->user?->email ?? 'sem e-mail cadastrado' }}</strong>
+                </p>
+                @if($ferias->funcionario->user?->email)
+                <form method="POST" action="{{ route(auth()->user()->role.'.ferias.reenviarEmail', $ferias) }}">
+                    @csrf
+                    <button type="submit" class="btn-mepi-outline w-100" style="justify-content:center;">
+                        <i class="bi bi-send"></i> Reenviar E-mail
+                    </button>
+                </form>
+                @else
+                <div style="background:#f7f5ee;border-radius:8px;padding:10px 12px;font-size:.8rem;color:#aaa;text-align:center;">
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    Funcionário sem acesso ao sistema vinculado.
+                </div>
+                @endif
+            </div>
+        </div>
+        @endif
     </div>
 
 </div>

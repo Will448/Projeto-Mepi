@@ -94,8 +94,16 @@
             <strong>Observação:</strong> {{ $folha->observacao }}
         </div>
         @endif
+        </div>
+        blade<div style="padding:16px 32px;border-top:1px solid #f0f0e8;">
+        <form method="POST" action="{{ route(auth()->user()->role.'.folha.reenviarEmail', $folha) }}">
+            @csrf
+            <button type="submit" class="btn-mepi-outline"
+                    style="font-size:.82rem;padding:7px 16px;">
+                <i class="bi bi-send"></i> Reenviar holerite por e-mail
+            </button>
+        </form>
     </div>
-
     {{-- Rodapé --}}
     <div style="padding:16px 32px;border-top:1px solid #f0f0e8;background:#fafaf5;display:flex;justify-content:space-between;align-items:center;">
         <span style="font-size:.72rem;color:#aaa;">MEPI — Sistema de Gestão</span>

@@ -220,4 +220,22 @@ public function store(Request $request)
     {
         return str_starts_with(request()->route()->getName(), 'admin.') ? 'admin.' : 'rh.';
     }
+
+    public function reenviarEmail(Ferias $ferias)
+{
+    $ferias->load('funcionario.user');
+
+    if (!$ferias->funcionario->user?->email) {
+        return back()->with('error', 'Funcionário não possui e-mail de acesso cadastrado.');
+    }
+
+    if ($ferias->isPendente()) {
+        return back()->with('error', 'E-mail só pode ser reenviado após aprovação ou negação.');
+    }
+
+    Mail::to($ferias->funcionario->user->email)
+        ->send(new \App\Mail\FeriasStatusMail($ferias));
+
+    return back()->with('success', 'E-mail reenviado com sucesso!');
+}
 }

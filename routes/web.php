@@ -59,8 +59,10 @@ Route::prefix('admin')->middleware(['auth','role:admin'])->name('admin.')->group
     Route::post('reservas/{reserva}/converter', [ReservaEquipamentoController::class, 'converter'])->name('reservas.converter');
     Route::get('auditoria',         [AuditoriaController::class, 'index'])->name('auditoria.index');
     Route::get('auditoria/{auditoria}', [AuditoriaController::class, 'show'])->name('auditoria.show');
+    Route::post('ferias/{ferias}/reenviar-email', [FeriasController::class, 'reenviarEmail'])->name('ferias.reenviarEmail');
+    Route::post('folha/{folha}/reenviar-email', [FolhaPagamentoController::class, 'reenviarEmail'])->name('folha.reenviarEmail');
 
-});
+    });
 
 // ── RH ──
 Route::prefix('rh')->middleware(['auth','role:rh,admin'])->name('rh.')->group(function () {
@@ -78,6 +80,9 @@ Route::prefix('rh')->middleware(['auth','role:rh,admin'])->name('rh.')->group(fu
     Route::get('reservas/{reserva}',            [ReservaEquipamentoController::class, 'show'])->name('reservas.show');
     Route::put('reservas/{reserva}',            [ReservaEquipamentoController::class, 'update'])->name('reservas.update');
     Route::post('reservas/{reserva}/converter', [ReservaEquipamentoController::class, 'converter'])->name('reservas.converter');
+    Route::post('ferias/{ferias}/reenviar-email', [FeriasController::class, 'reenviarEmail'])->name('ferias.reenviarEmail');
+    Route::post('folha/{folha}/reenviar-email', [FolhaPagamentoController::class, 'reenviarEmail'])->name('folha.reenviarEmail');
+
 });
 
 // ── Funcionário ───────────────────────────────────────────
