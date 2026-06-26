@@ -2,13 +2,24 @@ opencollection: 1.0.0
 
 info:
   name: MEPI API
+config:
+  proxy:
+    inherit: true
+    config:
+      protocol: http
+      hostname: ""
+      port: ""
+      auth:
+        username: ""
+        password: ""
+      bypassProxy: ""
 
 request:
   variables:
     - name: base_url
       value: http://localhost:8000/api
     - name: token
-      value: ""
+      value: 21|nGhF3dg9CSGVr1Lh3OCYtKOtnWxf2f1CsaMTsBq010550838
 
 docs:
   content: API REST do sistema MEPI — Monitoramento Inteligente de Pessoas e Equipamentos
