@@ -95,7 +95,7 @@
         </div>
         @endif
         </div>
-        blade<div style="padding:16px 32px;border-top:1px solid #f0f0e8;">
+        <div style="padding:16px 32px;border-top:1px solid #f0f0e8;">
         <form method="POST" action="{{ route(auth()->user()->role.'.folha.reenviarEmail', $folha) }}">
             @csrf
             <button type="submit" class="btn-mepi-outline"
